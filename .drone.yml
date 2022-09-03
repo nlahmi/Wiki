@@ -21,6 +21,9 @@ steps:
     - ls -la docs
     - ls -la site
     - ls -la .
+    - mkdir test && cd test
+    - git clone https://gitea.k/n.lahmi/Wiki
+    - ls -la .
 
 
 #  - name: Build Docker Image
