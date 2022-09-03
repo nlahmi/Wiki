@@ -9,7 +9,7 @@ clone:
 trigger:
   branch:
   - master
-
+ 
 steps:
   - name: Build
     image: squidfunk/mkdocs-material
@@ -19,6 +19,7 @@ steps:
     commands:
     - mkdocs build
     - ls -la docs
+    - ls -la site
     - ls -la .
 
 
