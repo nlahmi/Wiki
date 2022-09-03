@@ -23,7 +23,7 @@ steps:
 #    - ls -la .
     - mkdir static && cd static
     - git clone https://gitea.k/n.lahmi/Wiki
-    - git fetch remote
+    - git fetch origin
     - git checkout origin/static
     - cd Wiki
     - cp -R ../../site/* ./
