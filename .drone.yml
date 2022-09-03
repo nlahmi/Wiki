@@ -18,12 +18,15 @@ steps:
     #     from_secret: SPOTIFY_CACHE
     commands:
     - mkdocs build
-    - ls -la docs
-    - ls -la site
-    - ls -la .
-    - mkdir test && cd test
+#    - ls -la docs
+#    - ls -la site
+#    - ls -la .
+    - mkdir static && cd static
     - git clone https://gitea.k/n.lahmi/Wiki
-    - ls -la .
+    - git checkout static
+    - cd Wiki
+    - cp -R ../../site/* ./
+    - git push
 
 
 #  - name: Build Docker Image
