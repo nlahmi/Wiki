@@ -17,7 +17,7 @@ steps:
     #   SPOTIFY_CACHE:
     #     from_secret: SPOTIFY_CACHE
     commands:
-    - build
+    - mkdocs build
     - ls -la docs
     - ls -la .
 
@@ -38,14 +38,14 @@ steps:
 #      ipv6: false
 #      build_args: --network host
 
-  - name: Build Docker Image
-    image: plugins/docker
-#    privileged: false
-    settings:
-      repo: registry.k/n.lahmi/spotilike
-      tags: latest
-      registry: registry.k
-      insecure: true
-      ipv6: false
-      experimental: no
-      mtu: 1450
+#   - name: Build Docker Image
+#     image: plugins/docker
+# #    privileged: false
+#     settings:
+#       repo: registry.k/n.lahmi/spotilike
+#       tags: latest
+#       registry: registry.k
+#       insecure: true
+#       ipv6: false
+#       experimental: no
+#       mtu: 1450
