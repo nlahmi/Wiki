@@ -23,7 +23,7 @@ steps:
 #    - ls -la .
     - mkdir static && cd static
     - git clone https://gitea.k/n.lahmi/Wiki
-    - git checkout origin/static
+    - git checkout -b static origin/static
     - cd Wiki
     - cp -R ../../site/* ./
     - git push
