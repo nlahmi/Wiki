@@ -27,6 +27,8 @@ steps:
     - git checkout origin/static
     - cd Wiki
     - cp -R ../../site/* ./
+    - git add *
+    - git commit -m "Auto Update"
     - git push
 
 
