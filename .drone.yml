@@ -22,7 +22,7 @@ steps:
 #    - ls -la site
 #    - ls -la .
     - mkdir static && cd static
-    - git clone http://gitea-service.devops.svc:8000/n.lahmi/Wiki
+    - git clone https://gitea.k/n.lahmi/Wiki
     - git fetch origin
     - git checkout origin/static
     - cd Wiki
