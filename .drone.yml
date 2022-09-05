@@ -29,7 +29,7 @@ steps:
     - cp -R ../../site/* ./
     - git add *
     - git commit -m "Auto Update"
-    - git push
+    - git push origin static
 
 
 #  - name: Build Docker Image
