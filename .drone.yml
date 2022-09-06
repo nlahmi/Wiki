@@ -21,15 +21,16 @@ steps:
 #    - ls -la docs
 #    - ls -la site
 #    - ls -la .
-    - mkdir static && cd static
-    - git clone https://gitea.k/n.lahmi/Wiki
-    - git fetch origin
-    - git checkout origin/static
-    - cd Wiki
-    - cp -R ../../site/* ./
-    - git add *
-    - git commit -m "Auto Update"
-    - git push origin static/static
+    - pwd
+#    - mkdir ../static && cd ../static
+#    - git clone https://gitea.k/n.lahmi/Wiki
+#    - git fetch origin
+#    - git checkout origin/static
+#    - cd Wiki
+#    - cp -R ../../site/* ./
+#    - git add *
+#    - git commit -m "Auto Update"
+#    - git push origin static/static
 
 
 #  - name: Build Docker Image
