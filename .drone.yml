@@ -29,6 +29,8 @@ steps:
     - git checkout -b static
     - git pull origin static
     - cp -R /drone/src/site/* ./
+    - pwd
+    - ls -la .
     - git add *
     - git commit -m "Auto Update"
     - git push origin static
