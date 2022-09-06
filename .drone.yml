@@ -31,6 +31,7 @@ steps:
     - cp -R /drone/src/site/* ./
     - pwd
     - ls -la .
+    - git pull origin static
     - git add *
     - git commit -m "Auto Update"
     - git push origin static
