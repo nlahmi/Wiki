@@ -27,7 +27,6 @@ steps:
     - cd Wiki
     - git fetch origin
     - git checkout -b static
-    - git pull origin static
     - cp -R /drone/src/site/* ./
     - pwd
     - ls -la .
