@@ -1,7 +1,7 @@
 ## Infrastructure
 
 ### Refernces
-[https://github.com/longhorn/longhorn/issues/2714](https://github.com/longhorn/longhorn/issues/2714) </br>
+[https://github.com/longhorn/longhorn/issues/2714](https://github.com/longhorn/longhorn/issues/2714) <br>
 [https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook](https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook)
 
 ### Fix CoreDNS (test first if you ever start fresh, as I may have made some prior hard-coded modifications)
