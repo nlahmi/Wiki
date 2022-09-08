@@ -6,4 +6,8 @@ asfasfas
 ## Secondary
 
 # Something
+<<AllPages()>>
+123
 <<GlobalTOC()>>
+123
+<<Navigation()>>
