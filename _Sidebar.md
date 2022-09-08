@@ -1,4 +1,4 @@
 [[_TOC_]]
 
 [../ (Go Back)](../)
-<<Navigation("Navigate", "", false)>>
+<<Navigation("Navigate", ".", false)>>
