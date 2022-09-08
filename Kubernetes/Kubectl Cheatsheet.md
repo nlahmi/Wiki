@@ -1,4 +1,3 @@
-
 ### Shell into container
 ```
 kubectl exec -it $(kubectl get pod -l app=qbittorrent -o name) -- /bin/sh
