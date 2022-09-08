@@ -6,3 +6,4 @@ asfasfas
 ## Secondary
 
 # Something
+<<GlobalTOC()>>
