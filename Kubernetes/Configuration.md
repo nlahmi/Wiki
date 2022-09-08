@@ -52,14 +52,21 @@ kubectl apply -Rf step-ca
 ```
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
 kubectl apply -f .\cert-manager\ca-cert.yml
-# Also need to patch the `cert-manager` deployment to mount `ca-cert` to `/etc/ssl/certs`
-#          volumeMounts:
-#          - name: ca
-#            mountPath: /etc/ssl/certs
-#      volumes:
-#      - name: ca
-#        configMap:
-#          name: ca-cert
+```
+Also need to patch the `cert-manager` deployment to mount `ca-cert` to `/etc/ssl/certs`
+```
+  volumeMounts:
+  - name: ca
+    mountPath: /etc/ssl/certs
+```
+```
+  volumes:
+  - name: ca
+    configMap:
+      name: ca-cert
+```
+Than
+```
 kubectl apply -f .\cert-manager\issuer.yml
 ```
 
