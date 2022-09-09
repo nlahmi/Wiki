@@ -18,7 +18,7 @@ Type your passphrase, then:
 ./dev.sh ares-install -d HomeTV org.jellyfin.webos_*.ipk
 
 # To launch app
-./dev.sh ares-launch -d tv org.jellyfin.webos
+./dev.sh ares-launch -d HomeTV org.jellyfin.webos
 ```
 
 Taken from: [https://github.com/jellyfin/jellyfin-webos](https://github.com/jellyfin/jellyfin-webos)
