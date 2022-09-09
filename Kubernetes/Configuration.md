@@ -141,3 +141,8 @@ kubectl apply -f hrconvert2
 ```
 kubectl apply -f cyberchef
 ```
+
+### YoutubeDL
+```
+kubectl apply -f youtubedl
+```
