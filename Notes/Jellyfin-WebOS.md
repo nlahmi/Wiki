@@ -6,8 +6,8 @@ wget https://github.com/jellyfin/jellyfin-webos/releases/download/v1.1.0/org.jel
 
 Make sure the Developer app on the TV is installed, get its IP and Passphrase
 ```
-ares-setup-device -a HomeTV -i "host=192.168.6.117"
-ares-novacom --device HomeTV --getkey
+./dev.sh ares-setup-device -a HomeTV -i "host=192.168.6.117"
+./dev.sh ares-novacom --device HomeTV --getkey
 ```
 Type your passphrase, then:
 ```
