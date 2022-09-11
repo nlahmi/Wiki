@@ -104,6 +104,12 @@ kubectl create configmap gollum-cm --from-file=gollum/configmap/ --dry-run=clien
 kubectl apply -f gollum
 ```
 
+### NextCloud
+(Hopefully you won't have to) Follow the instrcutions at [this page](Notes/Nextcloud%20Migration.md), and also the official Backup/Restore/Migration docs. But to deploy:
+```
+kubectl apply -f nextcloud
+```
+
 ### Heimdall
 ```
 kubectl apply -f heimdall
