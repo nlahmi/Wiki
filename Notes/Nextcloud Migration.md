@@ -24,10 +24,15 @@ mysql -h localhost -u root -p6y0VpJFW6izty980mHpW nextcloud < /tmp/nextcloud-sql
 
 ### Running occ shell
 ```
-apt update && apt install sudo -y
+# New method:
+apt update && apt install sudo -y && alias occ='sudo -u www-data --preserve-env=PHP_MEMORY_LIMIT /usr/local/bin/php /var/www/html/occ'
+
+# Old method
+apt update && apt install sudo -y 
 sudo -u www-data bash
 export PHP_MEMORY_LIMIT=512M && alias occ='/usr/local/bin/php /var/www/html/occ'
 
+# Then just run:
 occ -V
 occ <Subcommand>
 ```
