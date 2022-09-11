@@ -31,7 +31,7 @@ export PHP_MEMORY_LIMIT=512M
 /usr/local/bin/php /var/www/html/occ
 ```
 
-### Troubleshooting 
+### Troubleshooting DB Initialization
 ```
 mysql -h localhost -u oc_ncadmin -pWKdPq9y9uu60eAyx0aN9LN17zm5Qew
 
