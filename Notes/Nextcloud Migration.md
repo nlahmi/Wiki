@@ -26,9 +26,10 @@ mysql -h localhost -u root -p6y0VpJFW6izty980mHpW nextcloud < /tmp/nextcloud-sql
 ```
 apt update && apt install sudo -y
 sudo -u www-data bash
-export PHP_MEMORY_LIMIT=512M
+export PHP_MEMORY_LIMIT=512M && alias occ='/usr/local/bin/php /var/www/html/occ'
 
-/usr/local/bin/php /var/www/html/occ
+occ -V
+occ <Subcommand>
 ```
 
 ### Troubleshooting DB Initialization
