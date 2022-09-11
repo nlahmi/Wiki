@@ -1,15 +1,16 @@
+## Migration
 
-## Backup
+### Backup
 ```
 mysqldump --single-transaction --default-character-set=utf8mb4 -h localhost -u dbadmin -pNxguVUX2jUhJnYxL nextcloud > nextcloud-sqlbkp_`date +"%Y%m%d"`.bak
 ```
 
-## Restore
-Note: For some reason MariaDB didn't create the DB properly when first mounted as NFS. I started it at first by mounting into a different directory (/var/lib/mysql2). Once created I copied the files, than changed it to mount correctly (/var/lib/mysql).
+### Restore
+1. For some reason MariaDB didn't create the DB properly when first mounted as NFS. I started it at first by mounting into a different directory (/var/lib/mysql2). Once created I copied the files, than changed it to mount correctly (/var/lib/mysql).
 
-Edit the backup file - delete the line that looks like `SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '586365d0-0500-11ec-b20e-020c29bab582:1-18095638';` <br>
-Then:
+2. Edit the backup file - delete the line that looks like `SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '586365d0-0500-11ec-b20e-020c29bab582:1-18095638';` <br>
 
+3. Then:
 ```
 kubectl cp "./nextcloud-sqlbkp_20220910.bak" nextcloud-*:/tmp/
 
@@ -19,7 +20,18 @@ mysql -h localhost -u root -p6y0VpJFW6izty980mHpW nextcloud < /tmp/nextcloud-sql
 ```
 
 
-### Random commands and notes
+## Random commands and notes
+
+### Running occ shell
+```
+apt update && apt install sudo -y
+sudo -u www-data bash
+export PHP_MEMORY_LIMIT=512M
+
+/usr/local/bin/php /var/www/html/occ
+```
+
+### Troubleshooting 
 ```
 mysql -h localhost -u oc_ncadmin -pWKdPq9y9uu60eAyx0aN9LN17zm5Qew
 
