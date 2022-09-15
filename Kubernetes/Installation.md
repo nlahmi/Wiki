@@ -1,6 +1,7 @@
-
 # Installation and Uninstallation
+```
 export TOKEN=YOUR_TOKEN_HERE
+```
 
 ## Uninstall to reinstall (without redownloading binary)
 ```
@@ -32,12 +33,14 @@ curl -sfL https://get.k3s.io | sh -s - agent \
 ```
 
 ## Note:
-On the pi i got the following error once it ran too many containers : "Failed to allocate directory watch: Too many open files"
-do this: https://forum.proxmox.com/threads/failed-to-allocate-directory-watch-too-many-open-files.28700/ when making an automated installation
+On the pi i got the following error once it ran too many containers : `"Failed to allocate directory watch: Too many open files"`
+do [this](https://forum.proxmox.com/threads/failed-to-allocate-directory-watch-too-many-open-files.28700/) when making an automated installation.
 I did the following (x4):
+```
 sysctl fs.inotify.max_user_instances=512
 sysctl fs.inotify.max_queued_events=65536
 sysctl fs.inotify.max_user_watches=119720
+```
 
 # Random Junk
 ```
