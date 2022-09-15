@@ -6,7 +6,8 @@
 
 ### Fix CoreDNS (test first if you ever start fresh, as I may have made some prior hard-coded modifications)
 ```
-kubectl create configmap coredns-custom --from-file=coredns/configmap/ -n kube-system --dry-run=client -o yaml | kubectl apply -f -
+kubectl create configmap coredns-custom -n kube-system --from-file=coredns/configmap/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl rollout restart deploy -n kube-system
 ```
 
 ### Custom ca-certificates.cer
@@ -32,14 +33,16 @@ helm install authelia authelia/authelia --version 0.8.38
 ```
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
-#kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.4/config/manifests/metallb-native.yaml
+#kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.6/config/manifests/metallb-native.yaml
 kubectl apply -f metallb/config.yml
 ```
 
 ### Longhorn
 ```
-kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.3.0/deploy/longhorn.yaml
-kubectl apply -f longhorn-ingress.yml
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.3.1/deploy/longhorn.yaml
+kubectl create configmap longhorn-default-setting -n longhorn-system --from-file=longhorn/configmap/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl rollout restart deploy -n longhorn-system
+kubectl apply -f longhorn
 # From here you should restore volumes from backup if needed
 ```
 
@@ -123,13 +126,6 @@ kubectl apply -f qbittorrent
 ### SpotiLike
 ```
 kubectl apply -f spotilike
-```
-
-### Wiki (mkdocs)
-<<Warn("Don't install it, install Gollum instead!")>>
-```
-kubectl create configmap mkdocs-config --from-file=mkdocs/configmap/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -f mkdocs
 ```
 
 ### Mealie
