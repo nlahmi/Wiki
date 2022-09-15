@@ -29,12 +29,10 @@ helm repo update
 helm install authelia authelia/authelia --version 0.8.38
 ```
 
-### metallb - consider upgrading
+### metallb
 ```
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
-#kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.6/config/manifests/metallb-native.yaml
-kubectl apply -f metallb/config.yml
+kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
+kubectl apply -f metallb/resources.yml
 ```
 
 ### Longhorn
