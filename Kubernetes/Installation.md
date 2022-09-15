@@ -1,9 +1,11 @@
 # Installation and Uninstallation
+
+## Install
 ```
 export TOKEN=YOUR_TOKEN_HERE
 ```
 
-## New k3s Cluster
+### New k3s Cluster
 ```
 curl -sfL https://get.k3s.io | sh -s - server \
 --token=$TOKEN \
@@ -13,7 +15,7 @@ curl -sfL https://get.k3s.io | sh -s - server \
 --cluster-init
 ```
 
-## Join k3s Cluster as another Master (with etcd and control plane)
+### Join k3s Cluster as another Master (with etcd and control plane)
 ```
 curl -sfL https://get.k3s.io | sh -s - server \
 --token=$TOKEN \
@@ -26,7 +28,7 @@ curl -sfL https://get.k3s.io | sh -s - server \
 #--no-deploy traefik,servicelb
 ```
 
-## Install Agents (worker nodes)
+### Install Agents (worker nodes)
 ```
 #/usr/local/bin/k3s-agent-uninstall.sh && \
 curl -sfL https://get.k3s.io | sh -s - agent \
@@ -34,7 +36,8 @@ curl -sfL https://get.k3s.io | sh -s - agent \
 --server https://k.lab.mi:6443/
 ```
 
-## Uninstall to reinstall (without redownloading binary)
+## Uninstall
+### Uninstall to reinstall (without redownloading binary)
 ```
 cp /usr/local/bin/k3s /usr/local/bin/k3s.bak
 /usr/local/bin/k3s-uninstall.sh
@@ -42,12 +45,12 @@ cp /usr/local/bin/k3s.bak /usr/local/bin/k3s
 reboot
 ```
 
-## Uninstall Completely
+### Uninstall Completely
 ```
 /usr/local/bin/k3s-uninstall.sh
 ```
 
-## Just kill all containers of a Node
+### Just kill all containers of a Node
 ```
 k3s-killall.sh
 ```
@@ -77,13 +80,6 @@ etcdctl --cacert=/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt --cert=/var/
 curl -sfL https://get.k3s.io | sh -s - server \
 --cluster-reset \
 --cluster-reset-restore-path=file:///var/lib/rancher/k3s/server/db/snapshots/etcd-snapshot-lab1kube3v-1657454460
-
-curl -sfL https://get.k3s.io | sh -s - server \
---token=$TOKEN \
---tls-san k.lab.mi --tls-san k.lab.mi --tls-san kube --tls-san kube.lab.mi --tls-san labXkubeX --tls-san labXkubeX.lab.mi --tls-san k3s --tls-san k3s.lab.mi --tls-san 192.168.7.1 \
---disable traefik --disable servicelb \
---kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true \
---cluster-init
 
 https://github.com/k3s-io/k3s/issues/1160
 kubectl -n kube-system delete helmcharts.helm.cattle.io traefik
