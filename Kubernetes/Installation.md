@@ -3,19 +3,11 @@
 export TOKEN=YOUR_TOKEN_HERE
 ```
 
-## Uninstall to reinstall (without redownloading binary)
-```
-cp /usr/local/bin/k3s /usr/local/bin/k3s.bak
-/usr/local/bin/k3s-uninstall.sh
-cp /usr/local/bin/k3s.bak /usr/local/bin/k3s
-reboot
-```
-
 ## Install k3s server (with etcd and control plane)
 ```
 curl -sfL https://get.k3s.io | sh -s - server \
 --token=$TOKEN \
---tls-san k.lab.mi --tls-san k.lab.mi --tls-san kube --tls-san kube.lab.mi --tls-san labXkubeX --tls-san labXkubeX.lab.mi --tls-san k3s --tls-san k3s.lab.mi --tls-san 192.168.7.1 \
+--tls-san k.lab.mi --tls-san k --tls-san kube --tls-san kube.lab.mi --tls-san k3s --tls-san k3s.lab.mi --tls-san 192.168.7.1 \
 --server https://k.lab.mi:6443/ \
 --disable traefik --disable servicelb \
 --kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true
@@ -30,6 +22,14 @@ curl -sfL https://get.k3s.io | sh -s - server \
 curl -sfL https://get.k3s.io | sh -s - agent \
 --token=$TOKEN \
 --server https://k.lab.mi:6443/
+```
+
+## Uninstall to reinstall (without redownloading binary)
+```
+cp /usr/local/bin/k3s /usr/local/bin/k3s.bak
+/usr/local/bin/k3s-uninstall.sh
+cp /usr/local/bin/k3s.bak /usr/local/bin/k3s
+reboot
 ```
 
 ## Note:
