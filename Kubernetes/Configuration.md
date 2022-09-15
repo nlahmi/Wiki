@@ -8,6 +8,14 @@
 ```
 kubectl create namespace devops
 kubectl create namespace logging
+kubectl create namespace cert-manager
+```
+
+### Custom ca-certificates.cer
+```
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n default | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n devops | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 ```
 
 ### Fix CoreDNS (test first if you ever start fresh, as I may have made some prior hard-coded modifications)
@@ -82,13 +90,6 @@ kubectl apply -Rf container-registry
 ### Devops
 ```
 kubectl apply -Rf devops
-```
-
-### Custom ca-certificates.cer
-```
-kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n default | kubectl apply -f -
-kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n devops | kubectl apply -f -
-kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 ```
 
 ### Logging
