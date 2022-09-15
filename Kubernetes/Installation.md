@@ -48,6 +48,7 @@ reboot
 ### Uninstall Completely
 ```
 /usr/local/bin/k3s-uninstall.sh
+reboot
 ```
 
 ### Just kill all containers of a Node
