@@ -10,9 +10,9 @@ export TOKEN=YOUR_TOKEN_HERE
 curl -sfL https://get.k3s.io | sh -s - server \
 --token=$TOKEN \
 --tls-san k.lab.mi --tls-san k --tls-san kube --tls-san kube.lab.mi --tls-san k3s --tls-san k3s.lab.mi --tls-san 192.168.7.1 \
+--cluster-init \
 --disable traefik --disable servicelb \
---kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true \
---cluster-init
+--kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true
 ```
 
 ### Join k3s Cluster as another Master (with etcd and control plane)
@@ -30,7 +30,6 @@ curl -sfL https://get.k3s.io | sh -s - server \
 
 ### Install Agents (worker nodes)
 ```
-#/usr/local/bin/k3s-agent-uninstall.sh && \
 curl -sfL https://get.k3s.io | sh -s - agent \
 --token=$TOKEN \
 --server https://k.lab.mi:6443/
@@ -41,6 +40,7 @@ curl -sfL https://get.k3s.io | sh -s - agent \
 ```
 cp /usr/local/bin/k3s /usr/local/bin/k3s.bak
 /usr/local/bin/k3s-uninstall.sh
+/usr/local/bin/k3s-agent-uninstall.sh
 cp /usr/local/bin/k3s.bak /usr/local/bin/k3s
 reboot
 ```
@@ -48,6 +48,7 @@ reboot
 ### Uninstall Completely
 ```
 /usr/local/bin/k3s-uninstall.sh
+/usr/local/bin/k3s-agent-uninstall.sh
 reboot
 ```
 

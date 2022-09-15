@@ -4,16 +4,16 @@
 [https://github.com/longhorn/longhorn/issues/2714](https://github.com/longhorn/longhorn/issues/2714) <br>
 [https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook](https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook)
 
+### Create Custom Namespaces
+```
+kubectl create namespace devops
+kubectl create namespace logging
+```
+
 ### Fix CoreDNS (test first if you ever start fresh, as I may have made some prior hard-coded modifications)
 ```
 kubectl create configmap coredns-custom -n kube-system --from-file=coredns/configmap/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl rollout restart deploy -n kube-system
-```
-
-### Custom ca-certificates.cer
-```
-kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n default | kubectl apply -f -
-kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n devops | kubectl apply -f -
+kubectl rollout restart deploy/coredns -n kube-system
 ```
 
 ### nginx
@@ -31,7 +31,8 @@ helm install authelia authelia/authelia --version 0.8.38
 
 ### metallb
 ```
-kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
+# You may need to wait a few minutes here
 kubectl apply -f metallb/resources.yml
 ```
 
@@ -41,8 +42,10 @@ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.3.1/depl
 kubectl create configmap longhorn-default-setting -n longhorn-system --from-file=longhorn/configmap/ --dry-run=client -o yaml | kubectl apply -f -
 kubectl rollout restart deploy -n longhorn-system
 kubectl apply -f longhorn
-# From here you should restore volumes from backup if needed
 ```
+From here you should: 
+1. Restore volumes from backup (Make sure to set Access Mode to RWX)
+2. Ceate PV/PVC for all of them (Select Previous PVC)
 
 ### step-ca
 ```
@@ -52,7 +55,6 @@ kubectl apply -Rf step-ca
 ### cert-manager
 ```
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
-kubectl apply -f .\cert-manager\ca-cert.yml
 ```
 Also need to patch the `cert-manager` deployment to mount `ca-cert` to `/etc/ssl/certs`
 ```
@@ -75,12 +77,18 @@ kubectl apply -f .\cert-manager\issuer.yml
 After this, gradually restart all k3s services to apply custom registry
 ```
 kubectl apply -Rf container-registry
-kubectl create secret generic registry-cert --from-file=./registry.k.crt  --from-file=./registry.k.key
 ```
 
 ### Devops
 ```
-kubectl apply -Rf .\devops\
+kubectl apply -Rf devops
+```
+
+### Custom ca-certificates.cer
+```
+kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n default | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n devops | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 ```
 
 ### Logging
