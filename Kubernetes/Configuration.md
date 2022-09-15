@@ -18,7 +18,7 @@ kubectl create configmap ca-cert --from-file=common/ca-certificates.cer --dry-ru
 
 ### nginx
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.1/deploy/static/provider/cloud/deploy.yaml
 ```
 
 ### Authelia
@@ -51,7 +51,7 @@ kubectl apply -Rf step-ca
 
 ### cert-manager
 ```
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
 kubectl apply -f .\cert-manager\ca-cert.yml
 ```
 Also need to patch the `cert-manager` deployment to mount `ca-cert` to `/etc/ssl/certs`
