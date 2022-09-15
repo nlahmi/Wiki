@@ -3,7 +3,17 @@
 export TOKEN=YOUR_TOKEN_HERE
 ```
 
-## Install k3s server (with etcd and control plane)
+## New k3s Cluster
+```
+curl -sfL https://get.k3s.io | sh -s - server \
+--token=$TOKEN \
+--tls-san k.lab.mi --tls-san k --tls-san kube --tls-san kube.lab.mi --tls-san k3s --tls-san k3s.lab.mi --tls-san 192.168.7.1 \
+--disable traefik --disable servicelb \
+--kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true \
+--cluster-init
+```
+
+## Join k3s Cluster as another Master (with etcd and control plane)
 ```
 curl -sfL https://get.k3s.io | sh -s - server \
 --token=$TOKEN \
@@ -32,14 +42,34 @@ cp /usr/local/bin/k3s.bak /usr/local/bin/k3s
 reboot
 ```
 
-## Note:
-On the pi i got the following error once it ran too many containers : `"Failed to allocate directory watch: Too many open files"`
+## Uninstall Completely
+```
+/usr/local/bin/k3s-uninstall.sh
+```
+
+## Just kill all containers of a Node
+```
+k3s-killall.sh
+```
+
+## Notes:
+1. On the pi i got the following error once it ran too many containers : `"Failed to allocate directory watch: Too many open files"`
 do [this](https://forum.proxmox.com/threads/failed-to-allocate-directory-watch-too-many-open-files.28700/) when making an automated installation.
 I did the following (x4):
 ```
 sysctl fs.inotify.max_user_instances=512
 sysctl fs.inotify.max_queued_events=65536
 sysctl fs.inotify.max_user_watches=119720
+```
+
+2. Using etcdctl
+([Source](https://rancher.com/docs/k3s/latest/en/advanced/#using-etcdctl))
+```
+VERSION="v3.5.0"
+curl -L https://github.com/etcd-io/etcd/releases/download/${VERSION}/etcd-${VERSION}-linux-amd64.tar.gz --output etcdctl-linux-amd64.tar.gz
+tar -zxvf etcdctl-linux-amd64.tar.gz --strip-components=1 -C /usr/local/bin etcd-${VERSION}-linux-amd64/etcdctl
+etcdctl --cacert=/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt --cert=/var/lib/rancher/k3s/server/tls/etcd/client.crt --key=/var/lib/rancher/k3s/server/tls/etcd/client.key version
+
 ```
 
 # Random Junk
