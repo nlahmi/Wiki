@@ -155,3 +155,9 @@ kubectl apply -f cyberchef
 ```
 kubectl apply -f youtubedl
 ```
+
+### your_spotify
+```
+kubectl create secret generic urspotify-secrets --from-file=urspotify/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f urspotify
+```
