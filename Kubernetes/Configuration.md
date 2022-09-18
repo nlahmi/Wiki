@@ -106,6 +106,14 @@ kubectl apply -f logging/ingress.yml
 helm upgrade -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
 ```
 
+### Authentik
+```
+helm repo add authentik https://charts.goauthentik.io
+helm repo update
+helm upgrade --install authentik authentik/authentik -f authentik/values.yml -n authentik
+kubectl apply -f authentik
+```
+
 ## Apps
 ### Gollum
 ```
