@@ -108,6 +108,12 @@ helm upgrade -f logging/values.yml prometheus prometheus-community/kube-promethe
 
 ### Authentik
 ```
+kubectl apply -f authentik/namespace.yml
+kubectl create secret generic authentik-secrets --from-file=authentik/secret/ --dry-run=client -o yaml -n authentik | kubectl apply -f -
+kubectl apply -f authentik
+```
+
+```
 helm repo add authentik https://charts.goauthentik.io
 helm repo update
 helm upgrade --install authentik authentik/authentik -f authentik/values.yml -n authentik
