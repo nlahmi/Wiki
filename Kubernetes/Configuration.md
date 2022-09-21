@@ -96,28 +96,20 @@ kubectl apply -Rf devops
 https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing
 https://github.com/techno-tim/launchpad/tree/master/kubernetes/kube-prometheus-stack
 ```
-kubectl apply -f logging/namespace.yml
-#kubectl create secret generic grafana-admin-credentials --from-literal=admin-user=admin --from-literal=admin-password=<PASSWORD HERE!> -n logging
+#kubectl apply -f logging/namespace.yml
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
-kubectl apply -f logging/ingress.yml
 
+helm upgrade --install -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
+kubectl create secret generic grafana-admin-credentials --from-file=logging/secret/ --dry-run=client -o yaml -n logging | kubectl apply -f -
+kubectl apply -f logging
 helm upgrade -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
 ```
 
 ### Authentik
 ```
-kubectl apply -f authentik/namespace.yml
+kubectl apply -f authentik
 kubectl create secret generic authentik-secrets --from-file=authentik/secret/ --dry-run=client -o yaml -n authentik | kubectl apply -f -
-kubectl apply -f authentik
-```
-
-```
-helm repo add authentik https://charts.goauthentik.io
-helm repo update
-helm upgrade --install authentik authentik/authentik -f authentik/values.yml -n authentik
-kubectl apply -f authentik
 ```
 
 ## Apps
