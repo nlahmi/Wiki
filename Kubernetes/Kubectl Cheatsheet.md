@@ -46,4 +46,6 @@ kubectl get pods -n longhorn-system | grep Evicted | awk '{print $1}' | xargs ku
 kubectl create deployment --image=nlahmi/spotilike spotilike
 kubectl create ingress demo-localhost --class=nginx --rule=*.lab.mi/*=demo:80
 kubectl create deployment --image=registry:2 registry
+
+kubectl annotate service ingress-nginx-controller metallb.universe.tf/allow-shared-ip=share -n ingress-nginx
 ```
