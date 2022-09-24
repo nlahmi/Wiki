@@ -57,7 +57,10 @@ From here you should:
 
 ### step-ca
 ```
-kubectl apply -Rf step-ca
+kubectl apply -f step-ca
+kubectl create secret generic step-secrets --from-file=step-ca/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl create configmap step-config-cm --from-file=step-ca/configmap/config/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl create configmap step-certs-cm --from-file=step-ca/configmap/certs/ --dry-run=client -o yaml | kubectl apply -f -
 ```
 
 ### cert-manager
