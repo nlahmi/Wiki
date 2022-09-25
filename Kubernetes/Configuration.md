@@ -15,6 +15,7 @@ kubectl create namespace cert-manager
 ```
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n default | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n devops | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n logging | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 ```
 
@@ -29,18 +30,10 @@ kubectl rollout restart deploy/coredns -n kube-system
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.1/deploy/static/provider/cloud/deploy.yaml
 ```
 
-### Authelia
-<<Warn("Don't install authelia.")>>
-```
-helm repo add authelia https://charts.authelia.com
-helm repo update
-helm install authelia authelia/authelia --version 0.8.38
-```
-
 ### metallb
 ```
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
-# You may need to wait a few minutes here
+# You may need to wait a few seconds here
 kubectl apply -f metallb/resources.yml
 ```
 
@@ -99,14 +92,12 @@ kubectl apply -Rf devops
 https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing
 https://github.com/techno-tim/launchpad/tree/master/kubernetes/kube-prometheus-stack
 ```
-#kubectl apply -f logging/namespace.yml
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
 helm upgrade --install -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
 kubectl create secret generic grafana-admin-credentials --from-file=logging/secret/ --dry-run=client -o yaml -n logging | kubectl apply -f -
 kubectl apply -f logging
-helm upgrade -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
 ```
 
 ### Authentik
