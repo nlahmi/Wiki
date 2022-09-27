@@ -104,6 +104,9 @@ kubectl apply -f logging
 ```
 kubectl apply -f authentik
 kubectl create secret generic authentik-secrets --from-file=authentik/secret/ --dry-run=client -o yaml -n authentik | kubectl apply -f -
+
+# Powershell Only
+kubectl get namespace -o=custom-columns=NAME:.metadata.name | Select-Object -Skip 1 | foreach { kubectl create service externalname --external-name authentik-service.authentik.svc.cluster.local authentik-proxy-outpost -n $_ }
 ```
 
 ## Apps
