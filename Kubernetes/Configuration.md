@@ -164,3 +164,9 @@ kubectl apply -f youtubedl
 kubectl create secret generic urspotify-secrets --from-file=urspotify/secret/ --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -f urspotify
 ```
+
+### Hebits Gift Collector (lightweight cron curl)
+```
+kubectl create secret generic hebits-secrets --from-file=hebits-gift/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f hebits-gift
+```
