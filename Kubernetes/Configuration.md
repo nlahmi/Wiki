@@ -4,6 +4,11 @@
 [https://github.com/longhorn/longhorn/issues/2714](https://github.com/longhorn/longhorn/issues/2714) <br>
 [https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook](https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook)
 
+### Install Node Feature Discovery (NFD)
+```
+kubectl apply -k https://github.com/kubernetes-sigs/node-feature-discovery/deployment/overlays/default?ref=v0.11.2
+```
+
 ### Create Custom Namespaces
 ```
 kubectl create namespace devops
