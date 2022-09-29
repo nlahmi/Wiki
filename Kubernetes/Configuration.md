@@ -4,9 +4,28 @@
 [https://github.com/longhorn/longhorn/issues/2714](https://github.com/longhorn/longhorn/issues/2714) <br>
 [https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook](https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook)
 
-### Install Node Feature Discovery (NFD)
+### Install Node Feature Discovery (NFD) and Intel GPU Drivers
 ```
 kubectl apply -k https://github.com/kubernetes-sigs/node-feature-discovery/deployment/overlays/default?ref=v0.11.2
+
+# Start NFD with GPU related configuration changes
+kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/gpu
+
+# Create NodeFeatureRules for detecting GPUs on nodes
+kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=v0.24.0
+
+# Create GPU plugin daemonset
+kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/nfd_labeled_nodes?ref=v0.24.0
+
+# Create GPU plugin daemonset with Fractional Resources support
+#kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/fractional_resources?ref=v0.24.0
+```
+
+### Label Nodes
+Do this once all nodes are joined
+```
+kubectl label nodes lab1laptop1 lab1rpi1 nlahmi.connectivity/type=wifi
+kubectl label nodes lab1lkube1v lab1lkube2v lab1lkube3v nlahmi.connectivity/type=ethernet
 ```
 
 ### Create Custom Namespaces
@@ -101,7 +120,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 
 helm upgrade --install -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
-kubectl create secret generic grafana-admin-credentials --from-file=logging/secret/ --dry-run=client -o yaml -n logging | kubectl apply -f -
+kubectl create secret generic grafana-secret --from-file=logging/secret/ --dry-run=client -o yaml -n logging | kubectl apply -f -
 kubectl apply -f logging
 ```
 
