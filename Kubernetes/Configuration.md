@@ -119,9 +119,9 @@ https://github.com/techno-tim/launchpad/tree/master/kubernetes/kube-prometheus-s
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-helm upgrade --install -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
-kubectl create secret generic grafana-secret --from-file=logging/secret/ --dry-run=client -o yaml -n logging | kubectl apply -f -
 kubectl apply -f logging
+kubectl create secret generic grafana-secret --from-file=logging/secret/ --dry-run=client -o yaml -n logging | kubectl apply -f -
+helm upgrade --install -f logging/values.yml prometheus prometheus-community/kube-prometheus-stack -n logging
 ```
 
 ### Authentik
