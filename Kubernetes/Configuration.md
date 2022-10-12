@@ -25,7 +25,7 @@ kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/de
 Do this once all nodes are joined
 ```
 kubectl label nodes lab1laptop1 lab1rpi1 nlahmi.connectivity/type=wifi
-kubectl label nodes lab1lkube1v lab1lkube2v lab1lkube3v nlahmi.connectivity/type=ethernet
+kubectl label nodes lab1kube1v lab1kube2v lab1kube3v nlahmi.connectivity/type=ethernet
 ```
 
 ### Create Custom Namespaces
@@ -33,6 +33,7 @@ kubectl label nodes lab1lkube1v lab1lkube2v lab1lkube3v nlahmi.connectivity/type
 kubectl create namespace devops
 kubectl create namespace logging
 kubectl create namespace cert-manager
+kubectl create namespace authentik
 ```
 
 ### Custom ca-certificates.cer
