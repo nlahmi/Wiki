@@ -41,10 +41,11 @@ kubectl create namespace authentik
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n default | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n devops | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n logging | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n authentik | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 ```
 
-### Fix CoreDNS (test first if you ever start fresh, as I may have made some prior hard-coded modifications)
+### Fix CoreDNS
 ```
 kubectl create configmap coredns-custom -n kube-system --from-file=coredns/configmap/ --dry-run=client -o yaml | kubectl apply -f -
 kubectl rollout restart deploy/coredns -n kube-system
@@ -70,8 +71,9 @@ kubectl rollout restart deploy -n longhorn-system
 kubectl apply -f longhorn
 ```
 From here you should: 
-1. Restore volumes from backup (Make sure to set Access Mode to RWX)
-2. Ceate PV/PVC for all of them (Select Previous PVC)
+1. Manually set up longhorn settings (or set it up to be automatic) according to the yaml file
+2. Restore volumes from backup (Make sure to set Access Mode to RWX)
+3. Ceate PV/PVC for all of them (Select Previous PVC)
 
 ### step-ca
 ```
@@ -87,12 +89,12 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 ```
 Also need to patch the `cert-manager` deployment to mount `ca-cert` to `/etc/ssl/certs`
 ```
-  volumeMounts:
+volumeMounts:
   - name: ca
     mountPath: /etc/ssl/certs
 ```
 ```
-  volumes:
+volumes:
   - name: ca
     configMap:
       name: ca-cert
