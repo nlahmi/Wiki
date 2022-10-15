@@ -54,6 +54,7 @@ kubectl rollout restart deploy/coredns -n kube-system
 ### nginx
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.1/deploy/static/provider/cloud/deploy.yaml
+kubectl patch deployment ingress-nginx-controller -n ingress-nginx --patch-file ingress-nginx\deployment-patch.yml
 ```
 
 ### metallb
