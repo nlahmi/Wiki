@@ -34,6 +34,7 @@ kubectl create namespace devops
 kubectl create namespace logging
 kubectl create namespace cert-manager
 kubectl create namespace authentik
+kubectl create namespace portainer
 ```
 
 ### Custom ca-certificates.cer
@@ -43,6 +44,7 @@ kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-ru
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n logging | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n authentik | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n portainer | kubectl apply -f -
 ```
 
 ### Fix CoreDNS
