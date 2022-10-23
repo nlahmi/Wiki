@@ -72,6 +72,9 @@ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.3.1/depl
 kubectl create configmap longhorn-default-setting -n longhorn-system --from-file=longhorn/configmap/ --dry-run=client -o yaml | kubectl apply -f -
 kubectl rollout restart deploy -n longhorn-system
 kubectl apply -f longhorn
+
+# Disable the local-path StorageClass from being the default
+kubectl patch storageclass local-path -p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"false\"}}}'
 ```
 From here you should: 
 1. Manually set up longhorn settings (or set it up to be automatic) according to the yaml file
