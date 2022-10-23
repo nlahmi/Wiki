@@ -204,6 +204,12 @@ kubectl apply -f hebits-gift
 ### Opensearch
 ```
 kubectl apply -f opensearch
+helm repo add opensearch-operator https://opster.github.io/opensearch-k8s-operator/
+helm install opensearch-operator opensearch-operator/opensearch-operator -n test    # Change this
+
+
 kubectl create configmap opensearch-config --from-file=opensearch/configmap/ --dry-run=client -o yaml -n opensearch | kubectl apply -f -
 
 ```
+# You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all nodes and restart them
+
