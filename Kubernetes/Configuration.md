@@ -200,3 +200,10 @@ kubectl apply -f urspotify
 kubectl create secret generic hebits-secrets --from-file=hebits-gift/secret/ --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -f hebits-gift
 ```
+
+### Opensearch
+```
+kubectl apply -f opensearch
+kubectl create configmap opensearch-config --from-file=opensearch/configmap/ --dry-run=client -o yaml -n opensearch | kubectl apply -f -
+
+```
