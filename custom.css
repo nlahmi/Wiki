@@ -1,3 +1,51 @@
 .container-lg {
     min-width: 90vw;
 }
+
+
+
+/* https://github.com/gollum/gollum/issues/1754#issuecomment-1235986338 */
+:root {
+	--teal: #94e2d5;
+	--lavender: #b4befe;
+	--text: #1e1e2e;
+
+	--primary: var(--teal);
+	--primary-text: var(--text);
+	--accent: var(--lavender);
+	--accent-text: var(--text);
+}
+
+pre {
+  position: relative;
+
+	/* so the button doesn't overflow */
+	min-height: 3rem;
+}
+
+.cust-btn-copy {
+  position: absolute;
+  top: max(1%, 0.5rem);
+  right: 1%;
+
+	background-color: var(--primary);
+	color: var(--primary-text);
+
+  padding: 0.25rem 1.5rem;
+
+	border: 0;
+	border-radius: 10px;
+
+	box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+
+	transition: all 100ms ease-in;
+}
+
+.cust-btn-copy:hover {
+	cursor: pointer;
+
+	transform: translate(-2.5%, -5%);
+
+	background-color: var(--accent);
+	color: var(--accent-text);
+}
