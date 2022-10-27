@@ -36,6 +36,7 @@ kubectl create namespace cert-manager
 kubectl create namespace authentik
 kubectl create namespace portainer
 kubectl create namespace diun
+kubectl create namespace elastic
 kubectl create namespace nfs-provisioner
 ```
 
@@ -48,6 +49,7 @@ kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-ru
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n portainer | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n diun | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n elastic | kubectl apply -f -
 ```
 
 ### Fix CoreDNS
