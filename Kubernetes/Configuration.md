@@ -225,8 +225,10 @@ You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all
 
 ## ElasticSearch
 ```
-# Elastic stuff here
+# Elastic
+kubectl apply -f elastic
 
+# Jupyter
 kubectl create configmap jupyter-config --from-file=jupyter/configmap/ --dry-run=client -o yaml -n elastic | kubectl apply -f -
 kubectl apply -f jupyter
 ```
