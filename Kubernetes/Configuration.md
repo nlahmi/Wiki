@@ -45,6 +45,7 @@ kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-ru
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n authentik | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n cert-manager | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n portainer | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n diun | kubectl apply -f -
 ```
 
 ### Fix CoreDNS
@@ -142,6 +143,11 @@ kubectl create secret generic authentik-secrets --from-file=authentik/secret/ --
 kubectl get namespace -o=custom-columns=NAME:.metadata.name | Select-Object -Skip 1 | foreach { kubectl create service externalname --external-name authentik-service.authentik.svc.cluster.local authentik-proxy-outpost -n $_ }
 ```
 
+## Diun
+```
+kubectl apply -f diun
+```
+
 ## Apps
 ### Gollum
 ```
@@ -217,4 +223,10 @@ kubectl create configmap opensearch-config --from-file=opensearch/configmap/ --d
 ```
 You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all nodes and restart them
 
+## ElasticSearch
+```
+# Elastic stuff here
 
+kubectl create configmap jupyter-config --from-file=jupyter/configmap/ --dry-run=client -o yaml -n elastic | kubectl apply -f -
+kubectl apply -f jupyter
+```
