@@ -35,6 +35,7 @@ kubectl create namespace logging
 kubectl create namespace cert-manager
 kubectl create namespace authentik
 kubectl create namespace portainer
+kubectl create namespace diun
 ```
 
 ### Custom ca-certificates.cer
@@ -93,34 +94,20 @@ kubectl create configmap step-certs-cm --from-file=step-ca/configmap/certs/ --dr
 ### cert-manager
 ```
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
-```
-Also need to patch the `cert-manager` deployment to mount `ca-cert` to `/etc/ssl/certs`
-```
-volumeMounts:
-  - name: ca
-    mountPath: /etc/ssl/certs
-```
-```
-volumes:
-  - name: ca
-    configMap:
-      name: ca-cert
-```
-Than
-```
+kubectl patch deployment cert-manager -n cert-manager --patch-file cert-manager\deployment-patch.yml
 kubectl apply -f .\cert-manager\issuer.yml
-```
-
-### registry
-After this, gradually restart all k3s services to apply custom registry
-```
-kubectl apply -Rf container-registry
 ```
 
 ### Devops
 ```
 kubectl apply -Rf devops
 ```
+#### registry
+This is not necessary if you ran devops recursively
+```
+kubectl apply -Rf devops/container-registry
+```
+Then, gradually restart all k3s services to apply custom registry
 
 ### Logging
 https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing
@@ -151,84 +138,73 @@ kubectl apply -f diun
 ## Apps
 ### Gollum
 ```
-kubectl create secret generic gollum-git-creds --from-file=gollum/secret/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl create configmap gollum-cm --from-file=gollum/configmap/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -f gollum
+kubectl create secret generic gollum-git-creds --from-file=default/gollum/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl create configmap gollum-cm --from-file=default/gollum/configmap/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f default/gollum
 ```
 
 ### NextCloud
 (Hopefully you won't have to) Follow the instrcutions at [this page](/Notes/Nextcloud%20Migration.md), and also the official Backup/Restore/Migration docs. But to deploy:
 ```
-kubectl apply -f nextcloud
+kubectl apply -f default/nextcloud
 ```
 
 ### Heimdall
 ```
-kubectl apply -f heimdall
+kubectl apply -f default/heimdall
 ```
 
 ### qbittorrent
 ```
-kubectl apply -f qbittorrent
+kubectl apply -f default/qbittorrent
 ```
 
 ### SpotiLike
 ```
-kubectl apply -f spotilike
+kubectl apply -f default/spotilike
 ```
 
 ### Mealie
 ```
-kubectl apply -f mealie
+kubectl apply -f default/mealie
 ```
 
 ### HRConvert2
 ```
-kubectl create configmap hrconvert-config --from-file=hrconvert2/configmap/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -f hrconvert2
+kubectl create configmap hrconvert-config --from-file=default/hrconvert2/configmap/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f default/hrconvert2
 ```
 
 ### Cyberchef
 ```
-kubectl apply -f cyberchef
+kubectl apply -f default/cyberchef
 ```
 
 ### YoutubeDL
 ```
-kubectl apply -f youtubedl
+kubectl apply -f default/youtubedl
 ```
 
 ### your_spotify
 ```
-kubectl create secret generic urspotify-secrets --from-file=urspotify/secret/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -f urspotify
+kubectl create secret generic urspotify-secrets --from-file=default/urspotify/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f default/urspotify
 ```
 
 ### Hebits Gift Collector (lightweight cron curl)
 ```
-kubectl create secret generic hebits-secrets --from-file=hebits-gift/secret/ --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -f hebits-gift
+kubectl create secret generic hebits-secrets --from-file=default/hebits-gift/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f default/hebits-gift
 ```
 
-### Opensearch
-!! Actually, don't install Opensearch !!
-```
-kubectl apply -f opensearch
-helm repo add opensearch-operator https://opster.github.io/opensearch-k8s-operator/
-helm install opensearch-operator opensearch-operator/opensearch-operator -n test    # Change this
-
-
-kubectl create configmap opensearch-config --from-file=opensearch/configmap/ --dry-run=client -o yaml -n opensearch | kubectl apply -f -
-
-```
 You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all nodes and restart them
 
 ## ElasticSearch
 ```
 # Elastic
-kubectl apply -f elastic
+kubectl apply -Rf elastic/elastic
 
 # Jupyter
-kubectl create configmap jupyter-config --from-file=jupyter/configmap/ --dry-run=client -o yaml -n elastic | kubectl apply -f -
-kubectl apply -f jupyter
+kubectl create configmap jupyter-config --from-file=elastic/jupyter/configmap/ --dry-run=client -o yaml -n elastic | kubectl apply -f -
+kubectl apply -f elastic/jupyter
 ```
