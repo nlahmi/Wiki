@@ -197,8 +197,6 @@ kubectl create secret generic hebits-secrets --from-file=default/hebits-gift/sec
 kubectl apply -f default/hebits-gift
 ```
 
-You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all nodes and restart them
-
 ## ElasticSearch
 ```
 # Elastic
@@ -208,3 +206,4 @@ kubectl apply -Rf elastic/elastic
 kubectl create configmap jupyter-config --from-file=elastic/jupyter/configmap/ --dry-run=client -o yaml -n elastic | kubectl apply -f -
 kubectl apply -f elastic/jupyter
 ```
+You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all nodes and restart them
