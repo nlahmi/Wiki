@@ -36,6 +36,7 @@ kubectl create namespace cert-manager
 kubectl create namespace authentik
 kubectl create namespace portainer
 kubectl create namespace diun
+kubectl create namespace nfs-provisioner
 ```
 
 ### Custom ca-certificates.cer
@@ -133,6 +134,13 @@ kubectl get namespace -o=custom-columns=NAME:.metadata.name | Select-Object -Ski
 ## Diun
 ```
 kubectl apply -f diun
+```
+
+## NFS-Subdir-Provisioner
+```
+kubectl create namespace nfs-provisioner
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+helm install nfs-provisioner -n nfs-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner -f nfs-provisioner/values.yml
 ```
 
 ## Apps
