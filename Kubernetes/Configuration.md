@@ -4,21 +4,26 @@
 [https://github.com/longhorn/longhorn/issues/2714](https://github.com/longhorn/longhorn/issues/2714) <br>
 [https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook](https://stackoverflow.com/questions/61616203/nginx-ingress-controller-failed-calling-webhook)
 
-### Install Node Feature Discovery (NFD) and Intel GPU Drivers
+### Install Node Feature Discovery (NFD), Intel GPU Drivers and nVidia Operator
 ```
 kubectl apply -k https://github.com/kubernetes-sigs/node-feature-discovery/deployment/overlays/default?ref=v0.11.2
 
+# Intel
 # Start NFD with GPU related configuration changes
 kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/gpu
-
 # Create NodeFeatureRules for detecting GPUs on nodes
 kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=v0.24.0
-
 # Create GPU plugin daemonset
 kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/nfd_labeled_nodes?ref=v0.24.0
 
 # Create GPU plugin daemonset with Fractional Resources support
 #kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/fractional_resources?ref=v0.24.0
+
+# NoVideo
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
+helm repo update
+
+helm install --wait --generate-name -n gpu-operator --create-namespace nvidia/gpu-operator -n gpu-operator/values.yml
 ```
 
 ### Label Nodes
