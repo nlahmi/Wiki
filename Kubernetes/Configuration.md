@@ -212,7 +212,7 @@ kubectl create secret generic hebits-secrets --from-file=default/hebits-gift/sec
 kubectl apply -f default/hebits-gift
 ```
 
-## ElasticSearch
+### ElasticSearch
 ```
 # Elastic
 kubectl apply -Rf elastic/elastic
