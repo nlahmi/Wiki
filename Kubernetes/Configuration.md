@@ -8,7 +8,7 @@
 ```
 kubectl apply -k https://github.com/kubernetes-sigs/node-feature-discovery/deployment/overlays/default?ref=v0.11.2
 
-# Intel
+# Shintel
 # Start NFD with GPU related configuration changes
 kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/gpu
 # Create NodeFeatureRules for detecting GPUs on nodes
@@ -138,12 +138,12 @@ kubectl create secret generic authentik-secrets --from-file=authentik/secret/ --
 kubectl get namespace -o=custom-columns=NAME:.metadata.name | Select-Object -Skip 1 | foreach { kubectl create service externalname --external-name authentik-service.authentik.svc.cluster.local authentik-proxy-outpost -n $_ }
 ```
 
-## Diun
+### Diun
 ```
 kubectl apply -f diun
 ```
 
-## NFS-Subdir-Provisioner
+### NFS-Subdir-Provisioner
 ```
 kubectl create namespace nfs-provisioner
 helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
