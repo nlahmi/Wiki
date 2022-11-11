@@ -23,7 +23,7 @@ kubectl apply -k https://github.com/intel/intel-device-plugins-for-kubernetes/de
 helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
 helm repo update
 
-helm install --wait --generate-name -n gpu-operator --create-namespace nvidia/gpu-operator -n gpu-operator/values.yml
+helm upgrade --install -f gpu-operator/values.yml gpu-operator --create-namespace nvidia/gpu-operator -n gpu-operator
 ```
 
 ### Label Nodes
