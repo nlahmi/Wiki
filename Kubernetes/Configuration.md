@@ -24,6 +24,7 @@ helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
 helm repo update
 
 helm upgrade --install -f gpu-operator/values.yml gpu-operator --create-namespace nvidia/gpu-operator -n gpu-operator
+kubectl apply -f gpu-operator/timeslicing-configmap.yml
 ```
 
 ### Label Nodes
