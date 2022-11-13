@@ -27,6 +27,11 @@ helm upgrade --install -f gpu-operator/values.yml gpu-operator --create-namespac
 kubectl apply -f gpu-operator/timeslicing-configmap.yml
 ```
 
+Then, run the following on the host with the GPU (or consider a better solution):
+```
+apt update && apt install -y libnvidia-encode-515-server
+```
+
 ### Label Nodes
 Do this once all nodes are joined
 ```
