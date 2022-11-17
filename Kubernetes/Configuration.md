@@ -228,3 +228,11 @@ kubectl create configmap jupyter-config --from-file=elastic/jupyter/configmap/ -
 kubectl apply -f elastic/jupyter
 ```
 You than have to run `echo vm.max_map_count = 262144 >> /etc/sysctl.conf` on all nodes and restart them
+
+
+### Kasm (Kali)
+```
+kubectl apply -f kasm
+kubectl create secret generic kasm-kali-secret --from-file=kasm/kali/secret/ --dry-run=client -o yaml -n kasm | kubectl apply -f -
+kubectl apply -f kasm/kali
+```
