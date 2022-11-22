@@ -37,6 +37,9 @@ kubectl rollout restart deploy -n `kubectl get namespace -o=custom-columns=NAME:
 
 ### Delete all "Evicted" Pods (or other statuses as well (linux)
 ```
+# All Namespaces!!!
+`kubectl get pods -A | grep ImagePull | awk '{print "kubectl delete pod -n "$1" "$2}'`
+
 kubectl get pods | grep Evicted | awk '{print $1}' | xargs kubectl delete pod
 kubectl get pods -n longhorn-system | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n longhorn-system
 ```
