@@ -25,6 +25,8 @@ helm repo update
 
 helm upgrade --install -f gpu-operator/values.yml gpu-operator --create-namespace nvidia/gpu-operator -n gpu-operator
 kubectl apply -f gpu-operator/timeslicing-configmap.yml
+
+kubectl patch clusterpolicy/cluster-policy    -n gpu-operator --type merge    -p '{"spec": {"devicePlugin": {"config": {"name": "time-slicing-config", "default": "a100-40gb"}}}}'
 ```
 
 Then, run the following on the host with the GPU (or consider a better solution) - [source](https://discourse.linuxserver.io/t/gpu-support-in-container/3139/16#:~:text=libnvidia%2Dencode%2D460%2Dserver):
