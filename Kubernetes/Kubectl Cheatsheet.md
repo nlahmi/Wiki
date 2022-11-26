@@ -52,3 +52,27 @@ kubectl create deployment --image=registry:2 registry
 
 kubectl annotate service ingress-nginx-controller metallb.universe.tf/allow-shared-ip=share -n ingress-nginx
 ```
+
+# Downsize Volume
+1. Stop the original workload
+2. Modify it and then run:
+```
+kubectl apply -f .\tools\volume-backer.yml
+```
+3. Go into it and run:
+```
+cp -R /source/* /destination
+```
+4. Stop volume-backer
+5. Delete original volume
+6. Change volume.yaml to reflect new size and apply it
+7. 
+```
+kubectl apply -f .\tools\volume-backer.yml
+```
+8. 
+```
+cp -R /destination/* /source
+```
+9. Delete volume_backer's volume
+
