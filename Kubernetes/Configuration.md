@@ -158,6 +158,57 @@ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/
 helm install nfs-provisioner -n nfs-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner -f nfs-provisioner/values.yml
 ```
 
+### Democratic-CSI
+TrueNAS Pre:
+1. Create a user (I named it csi with ID 9000) and give it sudo permissions
+2. Go to console, then:
+```
+cli
+
+account user query select=id,username,uid,sudo_nopasswd
+account user update id=<id> sudo_nopasswd=true
+
+# ctrl+d
+# Confirm by
+cat /usr/local/etc/sudoers
+```
+
+Run on all hosts:
+```
+# Install the following system packages
+sudo apt-get install -y open-iscsi lsscsi sg3-utils multipath-tools scsitools
+
+# Enable multipathing
+sudo tee /etc/multipath.conf <<-'EOF'
+defaults {
+    user_friendly_names yes
+    find_multipaths yes
+}
+blacklist {
+    devnode "^sd[a-z0-9]+"
+}
+EOF
+
+sudo systemctl enable multipath-tools.service
+sudo service multipath-tools restart
+
+# Ensure that open-iscsi and multipath-tools are enabled and running
+sudo systemctl status multipath-tools
+sudo systemctl enable open-iscsi.service
+sudo service open-iscsi start
+sudo systemctl status open-iscsi
+```
+
+To install on cluster:
+```
+helm repo add democratic-csi https://democratic-csi.github.io/charts/
+helm repo update
+helm search repo democratic-csi/
+
+helm upgrade --install -f democratic-csi/values.yml democratic-csi democratic-csi/democratic-csi  --create-namespace -n democratic-csi
+kubectl create secret generic democratic-csi-driver-config --from-file=democratic-csi/secret/ --dry-run=client -o yaml -n democratic-csi | kubectl apply -f -
+```
+
 ## Apps
 ### Gollum
 ```
