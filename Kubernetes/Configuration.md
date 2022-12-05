@@ -51,6 +51,7 @@ kubectl create namespace portainer
 kubectl create namespace diun
 kubectl create namespace elastic
 kubectl create namespace nfs-provisioner
+kubectl create namespace democratic-csi
 ```
 
 ### Custom ca-certificates.cer
@@ -63,6 +64,7 @@ kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-ru
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n portainer | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n diun | kubectl apply -f -
 kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n elastic | kubectl apply -f -
+kubectl create configmap ca-cert --from-file=common/ca-certificates.crt --dry-run=client -o yaml -n democratic-csi | kubectl apply -f -
 ```
 
 ### Fix CoreDNS
