@@ -209,6 +209,7 @@ helm search repo democratic-csi/
 
 helm upgrade --install -f democratic-csi/values.yml democratic-csi democratic-csi/democratic-csi  --create-namespace -n democratic-csi
 kubectl create secret generic democratic-csi-driver-config --from-file=democratic-csi/secret/ --dry-run=client -o yaml -n democratic-csi | kubectl apply -f -
+kubectl rollout restart deployment -n democratic-csi democratic-csi-controller
 ```
 
 ## Apps
