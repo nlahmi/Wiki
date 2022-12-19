@@ -274,6 +274,12 @@ kubectl create secret generic hebits-secrets --from-file=default/hebits-gift/sec
 kubectl apply -f default/hebits-gift
 ```
 
+### LG Developer Mode Watcher (lightweight cron curl)
+```
+kubectl create secret generic devmode-watcher-secrets --from-file=default/devmode-watcher/secret/ --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f default/devmode-watcher
+```
+
 ### ElasticSearch
 ```
 # Elastic
