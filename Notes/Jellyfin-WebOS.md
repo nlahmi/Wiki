@@ -22,3 +22,10 @@ Type your passphrase, then:
 ```
 
 Taken from: [https://github.com/jellyfin/jellyfin-webos](https://github.com/jellyfin/jellyfin-webos)
+
+---
+To keep it refreshing, I set up a cron on k8s, using this basic URL: `https://developer.lge.com/secure/ResetDevModeSession.dev?sessionToken=`
+which you can check by: `https://developer.lge.com/secure/CheckDevModeSession.dev?sessionToken=`
+the session token is taken from the file: `cat /var/luna/preferences/devmode_enabled`. You can get it by SSH-ing to a developer-mode-enabled tv.
+[Source](https://www.reddit.com/r/jellyfin/comments/ryowwb/i_created_a_simple_script_to_renew_the_devmode_on/)
+
